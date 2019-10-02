@@ -1,9 +1,13 @@
-import React, { useState, useContext } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Text, Input, Button } from 'react-native-elements'
+import React, { useContext } from 'react'
+import { StyleSheet, TouchableOpacity } from 'react-native';
+// import { Text, Input, Button } from 'react-native-elements'
 import styled from 'styled-components';
 
 import { Context as AuthContext } from '../context/AuthContext'
+import AuthForm from '../components/AuthForm'
+import NavLink from '../components/NavLink'
+import { NavigationEvents } from 'react-navigation'
+// import Spacer from '../components/Spacer'
 
 const Container = styled.View`
   flex: 1;
@@ -11,29 +15,45 @@ const Container = styled.View`
   margin-bottom: 250;
 `
 
-const Error = styled.Text`
-  font-size: 16;
-  color: red;
-  margin-left: 15;
-  margin-top: 15;
-`
+// const Error = styled.Text`
+//   font-size: 16;
+//   color: red;
+//   margin-left: 15;
+//   margin-top: 15;
+// `
 
-const Link = styled.Text`
-  color: blue;
-`
+// const Link = styled.Text`
+//   color: blue;
+// `
 
-import Spacer from '../components/Spacer'
+
 
 const SignupScreen = ({ navigation }) => {
-  const { state, signup } = useContext(AuthContext)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const { state, signup, clearErrorMessage } = useContext(AuthContext)
+  // const [email, setEmail] = useState('')
+  // const [password, setPassword] = useState('')
 
+  // useEffect(() => {
+  //   tryLocalSignin()
+  // }, [])
   // console.log(state);
 
   return (
     <Container>
-      <Spacer>
+      <NavigationEvents onWillBlur={clearErrorMessage} />
+      <AuthForm 
+        headerText="Sign Up for Tracker"
+        errorMessage={state.errorMessage}
+        submitButtonText="Sign Up"
+        // onSubmit={({ email, password }) => signup({ email, password })}
+        // or
+        onSubmit={signup}
+      />
+      <NavLink 
+        routeName="Signin"
+        text="Already have an account? Sign in instead!"
+      />
+      {/* <Spacer>
         <Text h3>Sign Up for Tracker</Text>
       </Spacer>
       <Input 
@@ -58,10 +78,10 @@ const SignupScreen = ({ navigation }) => {
           title="Sign Up"
           onPress={() => signup({ email, password })}
         />
-      </Spacer>
-      <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
+      </Spacer> */}
+      {/* <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
         <Spacer><Link>Already have an account? Sign in instead</Link></Spacer>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </Container>
   )
   // return (
@@ -88,14 +108,14 @@ SignupScreen.navigationOptions = () => {
 //   header: null
 // }
 
-const styles = StyleSheet.create({
-  container: {
-    // borderColor: 'red',
-    // borderWidth: 10,
-    flex: 1,
-    justifyContent: 'center',
-    marginBottom: 250
-  }
-})
+// const styles = StyleSheet.create({
+//   container: {
+//     // borderColor: 'red',
+//     // borderWidth: 10,
+//     flex: 1,
+//     justifyContent: 'center',
+//     marginBottom: 250
+//   }
+// })
 
 export {SignupScreen as default}
