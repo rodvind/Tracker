@@ -2,10 +2,11 @@ import React, { useEffect, useState }from 'react'
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-navigation'
 import { Text } from 'react-native-elements'
-import { requestPermissionsAsync } from 'expo-location'
+import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location'
 import * as Permissions from 'expo-permissions'
 
 import Map from '../components/Map'
+import '../_mockLocation'
 
 const TrackCreateScreen = (params) => {
   const [err, setErr] = useState(null)
@@ -15,6 +16,11 @@ const TrackCreateScreen = (params) => {
     try {
       // await requestPermissionsAsync()
       const response = await Permissions.askAsync(Permissions.LOCATION)
+      await watchPositionAsync({
+        accuracy: Accuracy.BestForNavigation,
+        timeInterval: 1000,
+        distanceInterval: 10
+      }, location => console.log(location))
       setPermissionStatus(response.status)
     } catch (e) {
       setErr(e)
