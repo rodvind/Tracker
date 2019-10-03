@@ -1,4 +1,4 @@
-import React, { useEffect, useState }from 'react'
+import React, { useEffect, useState, useContext }from 'react'
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-navigation'
 import { Text } from 'react-native-elements'
@@ -7,8 +7,11 @@ import * as Permissions from 'expo-permissions'
 
 import Map from '../components/Map'
 import '../_mockLocation'
+import { Context as LocationContext } from '../context/LocationContext'
+
 
 const TrackCreateScreen = (params) => {
+  const { addLocation } = useContext(LocationContext)
   const [err, setErr] = useState(null)
   const [permissionStatus, setPermissionStatus] = useState(null)
 
@@ -20,7 +23,7 @@ const TrackCreateScreen = (params) => {
         accuracy: Accuracy.BestForNavigation,
         timeInterval: 1000,
         distanceInterval: 10
-      }, location => console.log(location))
+      }, location => addLocation(location))
       setPermissionStatus(response.status)
     } catch (e) {
       setErr(e)
