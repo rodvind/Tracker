@@ -1,6 +1,6 @@
 import React, { useContext }from 'react'
 import { StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-navigation'
+import { SafeAreaView, withNavigationFocus } from 'react-navigation'
 import { Text } from 'react-native-elements'
 // import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location'
 // import * as Permissions from 'expo-permissions'
@@ -11,12 +11,13 @@ import { Context as LocationContext } from '../context/LocationContext'
 import useLocation from '../hooks/useLocation'
 
 
-const TrackCreateScreen = (params) => {
+const TrackCreateScreen = ({ isFocused }) => {
   const { addLocation } = useContext(LocationContext)
-  const [permissionStatus] = useLocation(addLocation)
+  const [permissionStatus] = useLocation(isFocused, addLocation)
   // Or
   // const [permissionStatus] = useLocation(location => addLocation(location))
 
+  // console.log(isFocused)
 
   // const [err, setErr] = useState(null)
   // const [permissionStatus, setPermissionStatus] = useState(null)
@@ -52,4 +53,4 @@ const TrackCreateScreen = (params) => {
 
 const styles = StyleSheet.create({})
 
-export {TrackCreateScreen as default}
+export default withNavigationFocus(TrackCreateScreen)
