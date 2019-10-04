@@ -13,17 +13,20 @@ import TrackForm from '../components/TrackForm'
 
 
 const TrackCreateScreen = ({ isFocused }) => {
-  const { state, addLocation } = useContext(LocationContext)
+  const { state: { recording }, addLocation } = useContext(LocationContext)
+  // const { state, addLocation } = useContext(LocationContext)
   const callback = useCallback(
     location => {
-      console.log('Inside', state.recording)
-      addLocation(location, state.recording)
+      // console.log('Inside', state.recording)
+      addLocation(location, recording)
+      // addLocation(location, state.recording)
     },
-    [state.recording],
+    [recording],
   )
-  console.log('Outside', state.recording)
+  // console.log('Outside', state.recording)
   // const { addLocation } = useContext(LocationContext)
-  const [permissionStatus] = useLocation(isFocused, callback)
+  const [permissionStatus] = useLocation(isFocused || recording, callback)
+  // const [permissionStatus] = useLocation(isFocused || state.recording, callback)
   // const [permissionStatus] = useLocation(isFocused, location => {
   //   console.log('Inside', state.recording)
   //   addLocation(location, state.recording)
