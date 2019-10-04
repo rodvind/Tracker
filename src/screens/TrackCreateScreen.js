@@ -1,4 +1,4 @@
-import React, { useContext }from 'react'
+import React, { useContext, useCallback }from 'react'
 import { StyleSheet } from 'react-native';
 import { SafeAreaView, withNavigationFocus } from 'react-navigation'
 import { Text } from 'react-native-elements'
@@ -9,11 +9,27 @@ import Map from '../components/Map'
 import '../_mockLocation'
 import { Context as LocationContext } from '../context/LocationContext'
 import useLocation from '../hooks/useLocation'
+import TrackForm from '../components/TrackForm'
 
 
 const TrackCreateScreen = ({ isFocused }) => {
-  const { addLocation } = useContext(LocationContext)
-  const [permissionStatus] = useLocation(isFocused, addLocation)
+  const { state, addLocation } = useContext(LocationContext)
+  const callback = useCallback(
+    location => {
+      console.log('Inside', state.recording)
+      addLocation(location, state.recording)
+    },
+    [state.recording],
+  )
+  console.log('Outside', state.recording)
+  // const { addLocation } = useContext(LocationContext)
+  const [permissionStatus] = useLocation(isFocused, callback)
+  // const [permissionStatus] = useLocation(isFocused, location => {
+  //   console.log('Inside', state.recording)
+  //   addLocation(location, state.recording)
+  // })
+
+  // const [permissionStatus] = useLocation(isFocused, addLocation)
   // Or
   // const [permissionStatus] = useLocation(location => addLocation(location))
 
@@ -47,6 +63,7 @@ const TrackCreateScreen = ({ isFocused }) => {
       <Map />
       {/* {err ? <Text>Please enable location services</Text> : null} */}
       {permissionStatus === 'denied' ? <Text>Please enable location services</Text> : null}
+      <TrackForm />
     </SafeAreaView>
   )
 }
