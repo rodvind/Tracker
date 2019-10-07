@@ -2,6 +2,7 @@ import React, { useContext, useCallback }from 'react'
 import { StyleSheet } from 'react-native';
 import { SafeAreaView, withNavigationFocus } from 'react-navigation'
 import { Text } from 'react-native-elements'
+import { FontAwesome } from '@expo/vector-icons'
 // import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location'
 // import * as Permissions from 'expo-permissions'
 
@@ -69,6 +70,11 @@ const TrackCreateScreen = ({ isFocused }) => {
       <TrackForm />
     </SafeAreaView>
   )
+}
+
+TrackCreateScreen.navigationOptions = {
+  title: 'Add Track',
+  tabBarIcon: <FontAwesome name="plus" size={20} />
 }
 
 const styles = StyleSheet.create({})

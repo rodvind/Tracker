@@ -9,13 +9,14 @@ const TrackListScreen = ({ navigation }) => {
   // console.log(state)
   return <>
     <NavigationEvents onWillFocus={fetchTracks} />
-    <Text style={{ fontSize: 48 }}>TrackListScreen</Text>
     <FlatList 
       data={state}
       keyExtractor={item => item._id}
       renderItem={({ item }) => {
         return (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            navigation.navigate('TrackDetail', { _id: item._id })
+          }} >
           <ListItem chevron title={item.name} />
         </TouchableOpacity>
         )
@@ -26,6 +27,10 @@ const TrackListScreen = ({ navigation }) => {
       onPress={() => navigation.navigate('TrackDetail')}
     /> */}
   </>
+}
+
+TrackListScreen.navigationOptions = {
+  title: 'Tracks'
 }
 
 const styles = StyleSheet.create({})
