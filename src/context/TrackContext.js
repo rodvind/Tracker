@@ -13,6 +13,7 @@ const trackReducer = (state, { type, payload }) => {
 const fetchTracks = dispatch => async () => {
   const response = await trackerApi.get('/tracks')
   dispatch({ type: 'fetch_tracks', payload: response.data })
+  // console.log('response: ', response)
 }
 
 const createTrack = dispatch => async (name, locations) => {

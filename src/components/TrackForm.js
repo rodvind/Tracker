@@ -17,7 +17,8 @@ const TrackForm = (params) => {
      changeName 
     } = useContext(LocationContext)
 
-    // console.log(locations.length)
+    console.log(locations.length)
+    console.log('Locations: ', locations)
 
     const [saveTrack] = useSaveTrack()
 
